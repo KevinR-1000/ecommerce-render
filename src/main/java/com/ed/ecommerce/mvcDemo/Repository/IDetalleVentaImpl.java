@@ -1,10 +1,9 @@
-package com.ed.ecommerce.mvcDemo.Service;
+package com.ed.ecommerce.mvcDemo.Repository;
 
 import com.ed.ecommerce.mvcDemo.Model.DetalleVenta;
-import com.ed.ecommerce.mvcDemo.Repository.IDetalleVenta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import javax.sql.DataSource; // <--- AÑADIDO
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,15 +13,17 @@ public class IDetalleVentaImpl implements IDetalleVenta {
 
     private final DataSource dataSource;
 
+    // Constructor para la inyección del origen de datos.
     @Autowired
     public IDetalleVentaImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    // Guarda el detalle de un producto dentro de una venta.
     @Override
     public void guardarDetalle(DetalleVenta detalleVenta) {
-        String sql = "INSERT INTO DetalleVenta (idVenta, idProducto, cantidad, precioUnitario) VALUES (?, ?, ?, ?)";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String sql = "INSERT INTO \"DetalleVenta\" (\"idVenta\", \"idProducto\", cantidad, \"precioUnitario\") VALUES (?, ?, ?, ?)";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, detalleVenta.getIdVenta());

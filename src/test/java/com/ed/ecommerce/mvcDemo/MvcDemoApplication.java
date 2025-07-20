@@ -23,7 +23,6 @@ public class MvcDemoApplication {
 			System.out.println("\n--- Iniciando prueba de conexión a la BD al arranque ---");
 			try (Connection con = dataSource.getConnection();
 				 Statement stmt = con.createStatement();
-				 // ¡ESTA ES LA LÍNEA CRÍTICA! Usamos GETDATE() para SQL Server.
 				 ResultSet rs = stmt.executeQuery("SELECT GETDATE() AS CurrentDateTime")) {
 
 				if (rs.next()) {

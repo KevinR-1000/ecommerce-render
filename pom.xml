@@ -50,11 +50,7 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+		<!-- CORREGIDO: Se ha ELIMINADO la dependencia de mssql-jdbc. -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

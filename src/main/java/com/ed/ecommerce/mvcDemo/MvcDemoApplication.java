@@ -4,28 +4,32 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import javax.sql.DataSource; // <--- AÑADIDO
+// CORRECCIÓN 1: Importar la anotación para activar las transacciones.
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 @SpringBootApplication
+// CORRECCIÓN 2: Añadir esta anotación. Es el "interruptor general" que le dice a Spring:
+// "¡Oye, busca y gestiona todas las anotaciones @Transactional que encuentres!"
+@EnableTransactionManagement
 public class MvcDemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(MvcDemoApplication.class, args);
 	}
 
-	// Al definir el Bean, le pedimos a Spring que nos pase el DataSource configurado.
 	@Bean
-	public CommandLineRunner connectionTestRunner(DataSource dataSource) { // <--- CAMBIADO
+	public CommandLineRunner connectionTestRunner(DataSource dataSource) {
 		return args -> {
 			System.out.println("\n--- Iniciando prueba de conexión a la BD al arranque ---");
-			// Ahora usamos el DataSource que nos dio Spring.
-			try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+			try (Connection con = dataSource.getConnection();
 				 Statement stmt = con.createStatement();
-				 // ¡IMPORTANTE! Cambiamos GETDATE() por NOW() para que sea compatible con PostgreSQL.
+				 // Usamos NOW() que es estándar en PostgreSQL.
 				 ResultSet rs = stmt.executeQuery("SELECT NOW() AS CurrentDateTime")) {
 
 				if (rs.next()) {
@@ -43,7 +47,6 @@ public class MvcDemoApplication {
 				System.err.println("Mensaje de error: " + e.getMessage());
 				e.printStackTrace();
 			}
-
 		};
 	}
 }

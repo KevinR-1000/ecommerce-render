@@ -21,9 +21,9 @@ public class VentaController {
     @Autowired
     private VentaService ventaService;
 
+    // Endpoint para procesar el pago y registrar la venta.
     @PostMapping("/procesar-pago")
     public ResponseEntity<?> procesarPago(@RequestBody List<Map<String, Object>> itemsCarrito, HttpSession session) {
-        // Obtenemos el usuario de la sesión
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
 
         if (usuarioLogueado == null) {
@@ -34,7 +34,6 @@ public class VentaController {
             ventaService.procesarVenta(itemsCarrito, usuarioLogueado.getIdUsuario());
             return new ResponseEntity<>("Venta procesada exitosamente.", HttpStatus.OK);
         } catch (Exception e) {
-            // Si el servicio lanza una excepción, la capturamos
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }

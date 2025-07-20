@@ -3,7 +3,7 @@ package com.ed.ecommerce.mvcDemo.Repository;
 import com.ed.ecommerce.mvcDemo.Model.Producto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import javax.sql.DataSource; // <--- AÑADIDO
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,20 +11,20 @@ import java.util.List;
 @Repository
 public class IProductoImpl implements IProducto {
 
-    // El DataSource gestionará las conexiones usando la configuración de application.properties
     private final DataSource dataSource;
 
-    // A través de este constructor, Spring nos "inyecta" el DataSource automáticamente.
+    // Constructor para la inyección del origen de datos.
     @Autowired
     public IProductoImpl(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
+    // Busca productos que coincidan con una categoría específica.
     @Override
     public List<Producto> findByCategoria(String categoria) {
         List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT * FROM Producto WHERE categoria = ?";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String sql = "SELECT * FROM \"Producto\" WHERE categoria = ?";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, categoria);
@@ -47,11 +47,12 @@ public class IProductoImpl implements IProducto {
         return productos;
     }
 
+    // Obtiene una lista con todos los productos disponibles.
     @Override
     public List<Producto> obtenerTodos() {
         List<Producto> productos = new ArrayList<>();
-        String query = "SELECT * FROM Producto";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String query = "SELECT * FROM \"Producto\"";
+        try (Connection con = dataSource.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
 
@@ -72,11 +73,12 @@ public class IProductoImpl implements IProducto {
         return productos;
     }
 
+    // Obtiene un producto específico a partir de su ID.
     @Override
     public Producto obtenerPorId(int id) {
         Producto producto = null;
-        String query = "SELECT * FROM Producto WHERE idProducto = ?";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String query = "SELECT * FROM \"Producto\" WHERE \"idProducto\" = ?";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setInt(1, id);
@@ -98,10 +100,11 @@ public class IProductoImpl implements IProducto {
         return producto;
     }
 
+    // Guarda un nuevo producto en la base de datos.
     @Override
     public void guardar(Producto producto) {
-        String query = "INSERT INTO Producto (nombre, descripcion, precio, stock, categoria, imagenUrl) VALUES (?, ?, ?, ?, ?, ?)";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String query = "INSERT INTO \"Producto\" (nombre, descripcion, precio, stock, categoria, \"imagenUrl\") VALUES (?, ?, ?, ?, ?, ?)";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setString(1, producto.getNombre());
@@ -116,10 +119,11 @@ public class IProductoImpl implements IProducto {
         }
     }
 
+    // Elimina un producto de la base de datos por su ID.
     @Override
     public void eliminar(int id) {
-        String query = "DELETE FROM Producto WHERE idProducto = ?";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String query = "DELETE FROM \"Producto\" WHERE \"idProducto\" = ?";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setInt(1, id);
@@ -129,11 +133,12 @@ public class IProductoImpl implements IProducto {
         }
     }
 
+    // Busca productos cuyo nombre contenga el término de búsqueda.
     @Override
     public List<Producto> buscarPorNombre(String termino) {
         List<Producto> productos = new ArrayList<>();
-        String sql = "SELECT * FROM Producto WHERE nombre LIKE ?";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        String sql = "SELECT * FROM \"Producto\" WHERE nombre LIKE ?";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, "%" + termino + "%");
@@ -156,10 +161,14 @@ public class IProductoImpl implements IProducto {
         return productos;
     }
 
+    // Actualiza el stock de un producto, restando la cantidad comprada.
     @Override
     public void actualizarStock(int idProducto, int cantidadComprada) {
-        String sql = "UPDATE Producto SET stock = stock - ? WHERE idProducto = ? AND stock >= ?";
-        try (Connection con = dataSource.getConnection(); // <--- CAMBIADO
+        System.out.println("--- INTENTANDO ACTUALIZAR STOCK ---");
+        System.out.println("Producto ID: " + idProducto + ", Cantidad a reducir: " + cantidadComprada);
+
+        String sql = "UPDATE \"Producto\" SET stock = stock - ? WHERE \"idProducto\" = ? AND stock >= ?";
+        try (Connection con = dataSource.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, cantidadComprada);
@@ -167,12 +176,16 @@ public class IProductoImpl implements IProducto {
             ps.setInt(3, cantidadComprada);
 
             int filasAfectadas = ps.executeUpdate();
+            System.out.println("Filas afectadas por la actualización: " + filasAfectadas);
 
             if (filasAfectadas == 0) {
-                System.err.println("Advertencia: No se pudo actualizar el stock para el producto " + idProducto + ". Stock insuficiente.");
+                System.err.println("Advertencia: No se pudo actualizar el stock para el producto " + idProducto + ". Stock insuficiente o producto no encontrado.");
+            } else {
+                System.out.println("¡STOCK ACTUALIZADO EXITOSAMENTE PARA EL PRODUCTO " + idProducto + "!");
             }
 
         } catch (SQLException e) {
+            System.err.println("--- ¡ERROR SQL AL ACTUALIZAR STOCK! ---");
             e.printStackTrace();
         }
     }

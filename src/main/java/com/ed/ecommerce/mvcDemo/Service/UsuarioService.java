@@ -5,7 +5,7 @@ import com.ed.ecommerce.mvcDemo.Repository.IUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import javax.sql.DataSource; // ¡IMPORTANTE! Esta línea faltaba
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,10 @@ import java.util.List;
 @Service
 public class UsuarioService implements IUsuario {
 
-    // CORREGIDO: El nombre correcto es DataSource
     private final DataSource dataSource;
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    // CORREGIDO: También se corrige aquí en el parámetro del constructor
     public UsuarioService(DataSource dataSource, BCryptPasswordEncoder passwordEncoder) {
         this.dataSource = dataSource;
         this.passwordEncoder = passwordEncoder;
@@ -27,7 +25,8 @@ public class UsuarioService implements IUsuario {
     @Override
     public Usuario validarCliente(String correo, String contrasena) {
         Usuario usuario = null;
-        String query = "SELECT idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, contrasena, direccion, telefono FROM Usuario WHERE correo = ?";
+        // CORREGIDO: Se añaden comillas dobles a "Usuario".
+        String query = "SELECT \"idUsuario\", \"primerNombre\", \"segundoNombre\", \"primerApellido\", \"segundoApellido\", correo, contrasena, direccion, telefono FROM \"Usuario\" WHERE correo = ?";
 
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
@@ -59,7 +58,8 @@ public class UsuarioService implements IUsuario {
 
     @Override
     public boolean registrar(Usuario usuario) {
-        String query = "INSERT INTO Usuario (primerNombre, segundoNombre, primerApellido, segundoApellido, correo, contrasena, direccion, telefono) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // CORREGIDO: Se añaden comillas dobles a "Usuario" y sus columnas.
+        String query = "INSERT INTO \"Usuario\" (\"primerNombre\", \"segundoNombre\", \"primerApellido\", \"segundoApellido\", correo, contrasena, direccion, telefono) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = dataSource.getConnection();
              PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -93,7 +93,8 @@ public class UsuarioService implements IUsuario {
     @Override
     public List<Usuario> obtenerUsuarios() {
         List<Usuario> usuarios = new ArrayList<>();
-        String query = "SELECT idUsuario, primerNombre, segundoNombre, primerApellido, segundoApellido, correo, contrasena, direccion, telefono FROM Usuario";
+        // CORREGIDO: Se añaden comillas dobles a "Usuario".
+        String query = "SELECT \"idUsuario\", \"primerNombre\", \"segundoNombre\", \"primerApellido\", \"segundoApellido\", correo, contrasena, direccion, telefono FROM \"Usuario\"";
         try (Connection con = dataSource.getConnection();
              Statement stmt = con.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
