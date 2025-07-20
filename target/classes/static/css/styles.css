@@ -1,0 +1,689 @@
+/* ---- Fuentes y Estilos Generales ---- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+a {
+    text-decoration: none;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+}
+
+main {
+    padding-top: 85px;
+}
+
+/* ---- Variables de Color ---- */
+:root {
+    --color-principal: #003366;
+}
+
+/* ---- Estilos del Encabezado (Header) ---- */
+.header {
+    background-color: #003366 ;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 85px;
+    padding: 40px 10%;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header .nav-links {
+    list-style: none;
+}
+
+.header .nav-links li {
+    display: inline-block;
+    padding: 0 20px;
+    font-size: 21px;
+}
+
+.header .nav-links li:hover,
+.overlay a:hover {
+    transform: scale(1.1);
+}
+
+.header .nav-links a {
+    color: #eceff1;
+}
+
+.header .nav-links a:hover {
+    color: #ffbc0e;
+}
+
+.header .login {
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.login a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+
+.header .logo img {
+    width: 190px;
+    height: auto;
+    border-radius: 15px;
+}
+
+.login img {
+    margin-left: 10px;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* ---- Menú de Navegación Desplegable (Overlay) ---- */
+.header .overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    background-color: rgba(33, 49, 63, .95);
+    overflow: hidden;
+    transition: all 0.3s ease 0s;
+}
+
+.header .overlay .overlay-content {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header .overlay a {
+    padding: 15px;
+    font-size: 36px;
+    display: block;
+    transition: all 0.3s ease 0s;
+    font-weight: 700;
+    color: #eceff1;
+}
+
+.header .overlay a:hover,
+.header .overlay a:focus {
+    color: #ffbc0e;
+}
+
+.header .overlay .close {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 65px;
+}
+
+/* ---- Sección del Banner Principal ---- */
+.contenedor-banner {
+    background-image: linear-gradient(100deg, #735d5d, #00000020),
+    url('../img/INNOVATE.jpg');
+    height: 20rem;
+    width: 100vw;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.content-banner {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 5%;
+    color: black;
+}
+
+.contenido {
+    text-align: left;
+}
+
+.contenido h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+}
+
+.contenido p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ---- Estilos del Pie de Página (Footer) ---- */
+.footer-mejorado {
+    background-color: #003366;
+    color: #b0c4de;
+    padding: 60px 0 20px 0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.footer-columna {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-columna h4 {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 25px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-columna h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: #ffbc0e;
+    height: 2px;
+    width: 50px;
+}
+
+.footer-columna ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-columna ul li {
+    margin-bottom: 12px;
+}
+
+.footer-columna ul li a {
+    color: #b0c4de;
+    text-decoration: none;
+    transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.footer-columna ul li a:hover {
+    color: #ffffff;
+    padding-left: 5px;
+}
+
+.redes-sociales {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.redes-sociales .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border-radius: 50%;
+    font-size: 18px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.redes-sociales .social-icon:hover {
+    background-color: #ffbc0e;
+    color: #003366;
+    transform: translateY(-3px);
+}
+
+.logo-footer img {
+    width: 180px;
+    margin-top: 15px;
+    opacity: 0.8;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    margin-top: 40px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+}
+
+/* ---- Animaciones Generales ---- */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.categoria-producto {
+    animation: fadeIn 1.2s ease forwards;
+    opacity: 0;
+}
+
+.categoria-producto:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
+}
+
+.content-banner {
+    animation: zoomIn 1.2s ease;
+    opacity: 0;
+    animation-fill-mode: forwards;
+}
+
+.contenido h2, .contenido p {
+    animation: fadeIn 1s ease forwards;
+    opacity: 0;
+    animation-delay: 0.5s;
+}
+
+.contenido p {
+    animation-delay: 1s;
+}
+
+.contenido button {
+    animation: fadeIn 1.5s ease forwards;
+    opacity: 0;
+    animation-delay: 1.2s;
+}
+
+.contenido-producto .btn-ver-mas {
+    display: block;
+    width: 100%;
+    padding: 20px 15px;
+    border-radius: 8px;
+    background-color: var(--color-principal);
+    border: var(--color-principal);
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.contenido-producto .btn-ver-mas:hover {
+    background-color: #ffbc0e;
+    transform: scale(1.05);
+}
+
+/* ---- Estilos del Buscador y Sugerencias ---- */
+.search-container {
+    position: relative;
+    flex-grow: 1;
+    margin: 0 20px;
+    max-width: 500px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#search-input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+#search-suggestions {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    cursor: default;
+    transition: background-color 0.2s;
+    overflow: hidden;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f0f0;
+}
+
+.suggestion-item-info {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    flex-grow: 1;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.suggestion-item-info img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-right: 12px;
+    border-radius: 5px;
+    flex-shrink: 0;
+}
+
+.suggestion-item-info span {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestion-add-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.suggestion-add-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+/* ---- Estilos del Modal de Pago ---- */
+.payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.payment-modal-overlay.visible {
+    opacity: 1;
+}
+
+.payment-modal-content {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.payment-modal-overlay.visible .payment-modal-content {
+    transform: scale(1);
+}
+
+.payment-modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.close-modal-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: #888;
+    cursor: pointer;
+}
+
+#payment-form .form-group {
+    margin-bottom: 15px;
+}
+
+#payment-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    color: #555;
+}
+
+#payment-form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+#payment-form input:focus {
+    outline: none;
+    border-color: var(--color-principal);
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.3);
+}
+
+#payment-form input.invalid {
+    border-color: #e74c3c;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    display: block;
+    height: 15px;
+    margin-top: 3px;
+}
+
+.submit-payment-button {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-payment-button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+.spinner {
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 3px solid #fff;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ---- Estilos del Modo Oscuro ---- */
+body.oscuro {
+    background-color: #121212 !important;
+    color: #e0e0e0;
+}
+
+body.oscuro .header,
+body.oscuro .footer-mejorado {
+    background-color: #1a1a1a;
+    border-bottom: 1px solid #333;
+}
+
+body.oscuro .footer-mejorado {
+    border-bottom: none;
+    border-top: 1px solid #333;
+}
+
+body.oscuro .contenedor-banner {
+    background-image: linear-gradient(100deg, rgba(0,0,0,0.7), rgba(0,0,0,0.4)), url('../img/INNOVATE.jpg');
+}
+
+body.oscuro .content-banner h2,
+body.oscuro .content-banner p {
+    color: #f5f5f5;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+body.oscuro main {
+    background-color: transparent !important;
+}
+
+body.oscuro .contenido-historia,
+body.oscuro .contenido-opinion {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+}
+
+body.oscuro .title h2 {
+    color: #e0e0e0;
+}
+
+body.oscuro .contenido-producto .btn-ver-mas {
+    background-color: #333;
+    border-color: #555;
+    color: #f1f1f1;
+}
+
+body.oscuro .login a.logged-in {
+    background-color: #444;
+    color: #f1f1f1;
+}
+
+body.oscuro .payment-modal-content {
+    background-color: #2c2c2c;
+}
+
+body.oscuro .payment-modal-content h2,
+body.oscuro .payment-modal-content p,
+body.oscuro #payment-form label {
+    color: #f1f1f1;
+}
+
+body.oscuro #payment-form input {
+    background-color: #444;
+    border-color: #666;
+    color: #f1f1f1;
+}
+
+body.oscuro .footer-columna h4 {
+    color: #f1f1f1;
+}
+
+body.oscuro .footer-columna ul li a {
+    color: #888;
+}
+
+body.oscuro .redes-sociales .social-icon {
+    background-color: #333;
+    color: #f1f1f1;
+}
+
+body.oscuro .login-main-background {
+    background-color: #121212 !important;
+}
+
+body.oscuro .container {
+    background-color: #2c2c2c !important;
+}
+
+body.oscuro .container .form-container form {
+    background-color: #2c2c2c !important;
+}
+
+body.oscuro .container .form-container h1,
+body.oscuro .container .form-container p,
+body.oscuro .container .form-container span {
+    color: #f1f1f1;
+}
+
+body.oscuro .container .form-container input {
+    background-color: #444;
+    color: #f1f1f1;
+    border: 1px solid #555;
+}
+
+body.oscuro .toggle-container .toggle {
+    background: linear-gradient(to right, #222, #1a1a1a);
+}
+
+/* ---- Media Queries para Responsividad ---- */
+@media screen and (max-width: 950px) {
+    .nav-links, #loginPC { display: none; }
+    .loginMovil, .menu { display: inherit; }
+}
+
+@media screen and (min-width: 950px) {
+    .loginMovil, .menuMovil { display: none; }
+}
+
+@media screen and (max-width: 500px) {
+    .menuMovil { display: inherit; }
+}

@@ -1,0 +1,218 @@
+/* ---- Fuentes y Estilos Generales ---- */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&family=Titillium+Web:200;300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Newsreader:ital,opsz,wght@0,6..72,300;1,6..72,300&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding:0;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+header h1{
+    text-align: center;
+    font-size: 35px;
+    color: #fff;
+    padding: 30px 0;
+}
+.contenedor{
+    max-width: 1200px;
+    padding: 10px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ---- Estilos de la Sección de Productos ---- */
+.contenedor .contenedor-items{
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-gap:30px;
+    grid-row-gap: 30px;
+    width: 100%;
+    transition: width .4s ease;
+}
+.contenedor .contenedor-items .item{
+    max-width: 200px;
+    margin: auto;
+    border: 1px solid #666;
+    border-radius: 10px;
+    padding: 20px;
+    transition: .3s;
+    background-color: #fff;
+}
+.contenedor .contenedor-items .item .img-item{
+    width: 100%;
+}
+.contenedor .contenedor-items .item:hover{
+    box-shadow: 0 0 10px #666;
+    scale: 1.05;
+}
+.contenedor .contenedor-items .item .titulo-item{
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    color: #333;
+}
+.contenedor .contenedor-items .item .precio-item{
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    font-size: 22px;
+    color: #333;
+}
+
+.contenedor .contenedor-items .item .boton-item{
+    display: block;
+    margin: 10px auto;
+    border: none;
+    background-color: black;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* ---- Media Queries para Responsividad ---- */
+@media screen and (max-width: 850px) {
+    .contenedor {
+        display: block;
+    }
+    .contenedor-items{
+        width: 100% !important;
+        margin-top: 20px;
+    }
+    .carrito{
+        position: static;
+        width: 100%;
+        height: auto;
+        margin-top: 40px;
+        transform: translateX(0) !important;
+        opacity: 1 !important;
+        box-shadow: none;
+        padding: 15px;
+    }
+    .carrito.open {
+        transform: translateX(0) !important;
+    }
+    .carrito.open ~ .contenedor-items {
+        width: 100% !important;
+    }
+}
+
+/* ---- Estilos del Modo Oscuro ---- */
+body.oscuro {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.oscuro header h1 {
+    color: #e0e0e0;
+}
+
+body.oscuro .contenedor .contenedor-items .item {
+    background-color: #222;
+    border-color: #444;
+    box-shadow: 0 0 10px rgba(0,0,0,0.7);
+}
+
+body.oscuro .contenedor .contenedor-items .item:hover {
+    box-shadow: 0 0 15px rgba(0,0,0,0.9);
+}
+
+body.oscuro .contenedor .contenedor-items .item .titulo-item,
+body.oscuro .contenedor .contenedor-items .item .precio-item {
+    color: #e0e0e0;
+}
+
+body.oscuro .contenedor .contenedor-items .item .boton-item {
+    background-color: #000;
+    color: #fff;
+}
+
+body.oscuro .carrito {
+    background-color: #222;
+    border-color: #555;
+    box-shadow: -8px 0 20px rgba(0, 0, 0, 0.4);
+}
+
+body.oscuro .carrito .header-carrito {
+    background-color: #000;
+    color: #fff;
+}
+
+body.oscuro .carrito .carrito-item {
+    background-color: #333;
+    border-color: #666;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+body.oscuro .carrito .carrito-item .carrito-item-titulo,
+body.oscuro .carrito .carrito-item .carrito-item-precio,
+body.oscuro .carrito .carrito-item .carrito-item-cantidad {
+    color: #e0e0e0;
+}
+
+body.oscuro .carrito-total {
+    background-color: #2a2a2a;
+    border-top-color: #666;
+}
+
+body.oscuro .carrito-total .fila strong,
+body.oscuro .carrito-total .carrito-precio-total {
+    color: #e0e0e0;
+}
+
+body.oscuro .header {
+    background-color: #000;
+}
+
+/* ---- Estilos del Botón de Tema ---- */
+#btnTema {
+    background-color: #ffffff;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-left: 20px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+#btnTema:hover {
+    background-color: #000000;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+body.oscuro #btnTema {
+    background-color: #444;
+    color: #ffbc0e;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+
+body.oscuro #btnTema:hover {
+    background-color: #666;
+    color: #ffe082;
+}
+
+body.oscuro .footer {
+    background-color: #000;
+    color: #e0e0e0;
+}

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InnovaTec</title>
+    <!-- Metadatos para que los buscadores entiendan mi página -->
+    <meta name="description" content="InnovaTec: lo último en tecnología para ti.">
+    <meta name="keywords" content="computadoras, celulares, accesorios, tecnología, perú">
+
+    <!-- Mis estilos y librerías -->
+    <link rel="icon" href="/img/logoinnova.jpg">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/nosotros.css">
+    <link rel="stylesheet" href="/css/productos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- Este script es importante para pasar datos de Java (Thymeleaf) a JavaScript -->
+    <script th:inline="javascript">
+        // Defino una variable global en JS para saber si el usuario está logueado o no.
+        var globalIsLoggedIn = [[${session.usuarioLogueado != null}]];
+    </script>
+
+    <!-- Mis scripts, los pongo al final del head con 'defer' para que no bloqueen la carga de la página -->
+    <script src="/js/javascript.js" defer></script>
+    <script src="/js/busqueda.js" defer></script>
+    <script src="/js/login.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+</head>
+
+<!-- Pongo atributos en el body para pasarle mensajes a mi JS (login.js) -->
+<body th:attr="
+    data-page-type='index',
+    data-success-message=${success}
+">
+
+<!-- Encabezado de la página, es el mismo en todas -->
+<header class="header">
+    <div class="logo">
+        <a href="/Eccomerce/index"><img src="/img/INNOVALOGO.png" alt="logo-empresa"/></a>
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/computadoras}">Computadoras</a></li>
+            <li><a th:href="@{/celulares}">Celulares</a></li>
+            <li><a th:href="@{/accesorios}">Accesorios</a></li>
+        </ul>
+    </nav>
+
+    <!-- Mi buscador de productos -->
+    <div class="search-container">
+        <form action="/buscar" method="get">
+            <input type="search" id="search-input" name="q" placeholder="Buscar productos..." autocomplete="off">
+        </form>
+        <div id="search-suggestions"></div> <!-- Aquí aparecerán las sugerencias -->
+    </div>
+
+    <!-- Botón de login/perfil -->
+    <div class="login">
+        <!-- El enlace cambia dependiendo si el usuario está logueado o no -->
+        <a id="user-profile-btn"
+           th:href="${session.usuarioLogueado != null} ? @{/Eccomerce/logout} : @{/Eccomerce/login}"
+           th:classappend="${session.usuarioLogueado != null} ? 'logged-in'">
+            <!-- Si está logueado, muestro sus iniciales -->
+            <span th:if="${session.usuarioLogueado != null}"
+                  th:text="${#strings.toUpperCase(#strings.substring(session.usuarioLogueado.primerNombre, 0, 1)) + #strings.toUpperCase(#strings.substring(session.usuarioLogueado.primerApellido, 0, 1))}">
+            </span>
+            <!-- Si no, muestro un ícono de usuario genérico -->
+            <img th:unless="${session.usuarioLogueado != null}" src="/icons/icon-user.svg" alt="ingresar">
+        </a>
+    </div>
+
+    <!-- Botones para cambiar tema y abrir carrito -->
+    <button id="btnTema">🌙</button>
+    <button id="open-cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+</header>
+
+<!-- Contenido principal de la página de inicio -->
+<main>
+
+    <!-- Este es el panel del carrito que se desliza desde la derecha -->
+    <div class="carrito" id="carrito" th:fragment="cart">
+        <div class="header-carrito">
+            <h2>Tu Carrito</h2>
+            <button class="close-cart-btn">X</button>
+        </div>
+        <div class="carrito-items">
+            <!-- Los productos del carrito se insertan aquí con JS -->
+            <p>Tu carrito está vacío.</p>
+        </div>
+        <div class="carrito-total">
+            <div class="fila">
+                <strong>Tu Total</strong>
+                <span class="carrito-precio-total">$0.00</span>
+            </div>
+            <button class="btn-pagar">Pagar <i class="fa-solid fa-bag-shopping"></i></button>
+        </div>
+    </div>
+
+    <!-- Banner principal -->
+    <section class="contenedor-banner">
+        <div class="content-banner">
+            <div class="contenido">
+                <h2>Innovación en tecnología</h2>
+                <p>"La tecnología que potencia tu vida al máximo.".</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección sobre nosotros -->
+    <section class="contenedor-historia">
+        <div class="title">
+            <h2>¿Quienes Somos?</h2>
+        </div>
+        <div class="content-historia">
+            <div class="contenido-historia">
+                <p>
+                    InnovaTec nace en Perú con el objetivo de ser tu conexión directa con la última tecnología
+                    en computadoras, celulares y accesorios, permitiéndote descubrir innovación para tu vida
+                    digital. Desde nuestros inicios, nos dedicamos a seleccionar cuidadosamente productos de
+                    alta calidad que incorporan los avances más recientes, buscando ser tu aliado tecnológico
+                    confiable en Perú a través de una experiencia de compra online transparente y un
+                    servicio al cliente atento, llevando así la innovación a tus manos.
+                </p>
+            </div>
+            <div class="img-historia">
+                <img src="/img/estrategias-de-marketing-de-relacionamento-pwqcbyfa2qz8agnrw913ut8gfmgzwar9gcs8mb5elc.png" alt="img-local">
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección que muestra las categorías de productos -->
+    <section class="contenedor-productos">
+        <div class="title">
+            <h2>Nuestros Productos</h2>
+        </div>
+        <div class="content-productos">
+            <!-- Cada categoría tiene su propia tarjeta con un enlace -->
+            <div class="categoria-producto">
+                <div class="titulo-producto"><h3>Computadoras</h3></div>
+                <div class="contenido-producto">
+                    <div>
+                        <img src="/img/6T2VF-01.jpg" alt="computadoras">
+                        <a href="/Eccomerce/computadoras" class="btn-ver-mas">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categoria-producto">
+                <div class="titulo-producto"><h3>Celulares</h3></div>
+                <div class="contenido-producto">
+                    <div>
+                        <img src="/img/BANNER-SMART-CELULAR-3.jpg" alt="celulares">
+                        <a href="../Eccomerce/celulares" class="btn-ver-mas">Ver más</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categoria-producto">
+                <div class="titulo-producto"><h3>Accesorios</h3></div>
+                <div class="contenido-producto">
+                    <div>
+                        <img src="/img/variedad-de-productos-miccell.webp" alt="accesorios">
+                        <a href="../Eccomerce/accesorios" class="btn-ver-mas">Ver más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Otra sección informativa -->
+    <section class="contenedor-opiniones">
+        <div class="title">
+            <h2>Historia</h2>
+        </div>
+        <div class="content-opiniones">
+            <div class="opinion">
+                <div class="titulo-opinion">
+                    <h3>Infinit-Tec</h3>
+                </div>
+                <div class="contenido-opinion">
+                    <div>
+                        <p>
+                            InnovaTec se fundó en 2021 en Perú, impulsada por la creciente demanda de
+                            tecnología innovadora y la necesidad de un acceso más fácil y confiable a ella.
+                            Observando el dinamismo del mercado peruano y la rápida evolución tecnológica,
+                            decidimos crear un espacio digital donde los usuarios pudieran encontrar lo último
+                            en computadoras, celulares y accesorios con la confianza de una compra segura y un
+                            servicio atento, llevando así la innovación a tus manos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Este es el Pop-up para el pago, está oculto por defecto -->
+<div id="payment-modal" class="payment-modal-overlay" style="display: none;">
+    <div class="payment-modal-content">
+        <button id="close-payment-modal" class="close-modal-btn">×</button>
+        <h2>Datos de Pago</h2>
+        <form id="payment-form">
+            <div class="form-group">
+                <label for="card-name">Nombre en la Tarjeta</label>
+                <input type="text" id="card-name" required placeholder="Ejem. Juan Perez">
+                <small class="error-message" id="card-name-error"></small>
+            </div>
+            <div class="form-group">
+                <label for="card-number">Número de Tarjeta</label>
+                <input type="text" id="card-number" required placeholder="4242 4242 4242 4242" maxlength="19">
+                <small class="error-message" id="card-number-error"></small>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="card-expiry">Vencimiento (MM/AA)</label>
+                    <input type="text" id="card-expiry" required placeholder="12/26" maxlength="5">
+                    <small class="error-message" id="card-expiry-error"></small>
+                </div>
+                <div class="form-group">
+                    <label for="card-cvv">CVV</label>
+                    <input type="text" id="card-cvv" required placeholder="123" maxlength="4">
+                    <small class="error-message" id="card-cvv-error"></small>
+                </div>
+            </div>
+            <div id="payment-error" class="payment-error-message"></div>
+            <button type="submit" id="submit-payment-btn" class="submit-payment-button">
+                <span class="btn-text">Pagar Ahora</span>
+                <span class="spinner" style="display: none;"></span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- Pie de página, también es el mismo en todas las páginas -->
+<footer class="footer-mejorado">
+    <div class="footer-container">
+        <!-- Varias columnas con enlaces útiles -->
+        <div class="footer-columna">
+            <h4>Atención al Cliente</h4>
+            <ul>
+                <li><a href="#">Centro de Ayuda</a></li>
+                <li><a href="#">Preguntas Frecuentes</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Sobre InnovaTec</h4>
+            <ul>
+                <li><a href="#">¿Quiénes Somos?</a></li>
+                <li><a href="#">Blog de Tecnología</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Políticas</h4>
+            <ul>
+                <li><a href="#">Política de Privacidad</a></li>
+                <li><a href="#">Términos y Condiciones</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Síguenos</h4>
+            <div class="redes-sociales">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+            <div class="logo-footer">
+                <img src="/img/INNOVALOGO.png" alt="logo-innovatec"/>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 InnovaTec. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+</body>
+</html>

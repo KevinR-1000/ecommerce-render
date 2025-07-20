@@ -1,0 +1,50 @@
+<!-- RUTA: src/main/resources/templates/resultados-busqueda.html -->
+
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Resultados para: ' + ${terminoBuscado}"></title>
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/productos.css">
+    <!-- ... (otros links de head como en tus otras páginas) ... -->
+</head>
+<body>
+
+<!-- Incluye el mismo HEADER que tienes en las otras páginas (con buscador, etc.) -->
+<div th:replace="~{fragments/header :: header}"></div>
+
+<section class="contenedor">
+    <!-- Incluye el mismo CARRITO que tienes en las otras páginas -->
+    <div th:replace="~{fragments/cart :: cart}"></div>
+
+    <h2 style="text-align: center; margin: 20px 0;">Resultados de búsqueda para: "<span th:text="${terminoBuscado}"></span>"</h2>
+
+    <div class="contenedor-items">
+        <!-- Mensaje si no se encuentran productos -->
+        <div th:if="${productos.isEmpty()}" style="text-align: center; width: 100%;">
+            <p>No se encontraron productos que coincidan con tu búsqueda.</p>
+        </div>
+
+        <!-- Bucle para mostrar los productos encontrados -->
+        <div class="item" th:each="producto : ${productos}">
+            <span class="titulo-item" th:text="${producto.nombre}"></span>
+            <img th:src="@{${producto.imagenUrl}}" alt="Imagen de producto" class="img-item">
+            <span class="precio-item" th:text="'$' + ${#numbers.formatDecimal(producto.precio, 1, 'COMMA', 2, 'POINT')}"></span>
+            <button class="boton-item"
+                    onclick="agregarAlCarritoClicked(event)"
+                    th:data-product-id="${producto.idProducto}"
+                    th:data-product-name="${producto.nombre}"
+                    th:data-product-price="${producto.precio}"
+                    th:data-product-image="${producto.imagenUrl}">
+                Agregar al Carrito
+            </button>
+        </div>
+    </div>
+</section>
+
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>

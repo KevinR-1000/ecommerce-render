@@ -1,0 +1,213 @@
+/* ---- Fuentes y Estilos Generales ---- */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Newsreader&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&display=swap');
+
+:root {
+    --color-principal: #003366;
+    --color-fondo-claro: #f4f8fc;
+    --color-borde: #dce7ee;
+    --color-texto-oscuro: #2c3e50;
+    --color-destacado: #007bff;
+    --color-error: #e74c3c;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: white;
+}
+
+a {
+    text-decoration: none;
+}
+
+main {
+    padding-top: 85px;
+}
+
+/* ---- Estilos del Encabezado (Header) ---- */
+.header {
+    background-color: var(--color-principal);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 85px;
+    padding: 5px 10%;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+}
+
+.header .logo img {
+    width: 190px;
+    border-radius: 15px;
+}
+
+.header .nav-links {
+    list-style: none;
+}
+
+.header .nav-links li {
+    display: inline-block;
+    padding: 0 20px;
+    font-size: 21px;
+}
+
+.header .nav-links a {
+    color: #eceff1;
+}
+
+.header .login {
+    margin-left: auto;
+}
+
+#open-cart-btn {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #eceff1;
+    margin-left: 10px;
+}
+
+/* ---- Estilos del Carrito de Compras ---- */
+.carrito {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100vh;
+    background-color: var(--color-fondo-claro);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+    overflow-y: auto;
+    z-index: 1000;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+}
+
+.carrito.open {
+    transform: translateX(0);
+}
+
+.header-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--color-borde);
+    margin-bottom: 25px;
+}
+
+.header-carrito h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: var(--color-principal);
+}
+
+.close-cart-btn {
+    background: none;
+    border: none;
+    font-size: 2em;
+    font-weight: bold;
+    color: #5a6a7e;
+    cursor: pointer;
+}
+
+.carrito-items {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    margin-bottom: 25px;
+}
+
+.carrito-item {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid var(--color-borde);
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.carrito-item-img {
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.carrito-item-details {
+    flex-grow: 1;
+}
+
+.selector-cantidad {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    gap: 8px;
+}
+
+.selector-cantidad i {
+    background-color: var(--color-borde);
+    color: var(--color-texto-oscuro);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.btn-eliminar {
+    margin-left: 15px;
+    font-size: 1.5em;
+    color: var(--color-error);
+    cursor: pointer;
+}
+
+.carrito-total {
+    padding-top: 20px;
+    border-top: 1px solid var(--color-borde);
+    font-weight: bold;
+}
+
+.carrito-total .fila {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.btn-pagar {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+/* ---- Estilos del Pie de Página (Footer) ---- */
+.footer {
+    background-color: #003366;
+    padding: 20px 5%;
+    color: #e2f1f8;
+    font-family: 'Nunito', sans-serif;
+}
+
+/* ---- Media Queries para Responsividad ---- */
+@media screen and (max-width: 950px) {
+    .nav-links, #loginPC { display: none; }
+}

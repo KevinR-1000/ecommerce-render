@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Acceso de Usuarios - InnovaTec</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/logoinnova.jpg">
+
+    <!-- Estilos exactos de las otras páginas + el de login -->
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/estilo.css">
+    <link rel="stylesheet" href="/css/productos.css">
+    <link rel="stylesheet" href="/css/login.css"> <!-- Específico para esta página -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <!-- Scripts exactos de las otras páginas -->
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var globalIsLoggedIn = [[${session.usuarioLogueado != null}]];
+        /*]]>*/
+    </script>
+    <script src="/js/javascript.js" defer></script>
+    <script src="/js/busqueda.js" defer></script>
+    <script src="/js/login.js" defer></script>
+</head>
+
+<body th:attr="
+    data-page-type='login',
+    data-success-message=${success},
+    data-error-message=${error},
+    data-info-message=${info}
+">
+
+<!-- ====================================================== -->
+<!-- HEADER -->
+<!-- ====================================================== -->
+<header class="header">
+    <div class="logo">
+        <a th:href="@{/}"><img src="/img/INNOVALOGO.png" alt="logo-empresa"/></a>
+    </div>
+    <nav>
+        <ul class="nav-links">
+            <li><a th:href="@{/}">Inicio</a></li>
+            <li><a th:href="@{/computadoras}">Computadoras</a></li>
+            <li><a th:href="@{/celulares}">Celulares</a></li>
+            <li><a th:href="@{/accesorios}">Accesorios</a></li>
+        </ul>
+    </nav>
+    <div class="search-container">
+        <form th:action="@{/buscar}" method="get">
+            <input type="search" id="search-input" name="q" placeholder="Buscar productos..." autocomplete="off">
+        </form>
+        <div id="search-suggestions"></div>
+    </div>
+    <div class="login">
+        <a id="user-profile-btn"
+           th:href="${session.usuarioLogueado != null} ? @{/Eccomerce/logout} : @{/Eccomerce/login}"
+           th:classappend="${session.usuarioLogueado != null} ? 'logged-in'">
+            <span th:if="${session.usuarioLogueado != null}"
+                  th:text="${#strings.toUpperCase(#strings.substring(session.usuarioLogueado.primerNombre, 0, 1)) + (#strings.length(session.usuarioLogueado.primerApellido) > 0 ? #strings.toUpperCase(#strings.substring(session.usuarioLogueado.primerApellido, 0, 1)) : '')}"></span>
+            <img th:unless="${session.usuarioLogueado != null}" src="/icons/icon-user.svg" alt="ingresar">
+        </a>
+    </div>
+    <button id="btnTema">🌙</button>
+    <button id="open-cart-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+</header>
+
+<!-- Panel del carrito idéntico -->
+<div class="carrito" id="carrito">
+    <div class="header-carrito">
+        <h2>Tu Carrito</h2>
+        <button class="close-cart-btn">X</button>
+    </div>
+    <div class="carrito-items">
+        <p>Tu carrito está vacío.</p>
+    </div>
+    <div class="carrito-total">
+        <div class="fila">
+            <strong>Tu Total</strong>
+            <span class="carrito-precio-total">$0.00</span>
+        </div>
+        <button class="btn-pagar">Pagar <i class="fa-solid fa-bag-shopping"></i> </button>
+    </div>
+</div>
+
+<!-- ====================================================== -->
+<!-- CONTENIDO PRINCIPAL: TU FORMULARIO DE LOGIN -->
+<!-- ====================================================== -->
+<main class="login-main-background">
+    <div class="container" id="container">
+        <!-- FORMULARIO DE REGISTRO (SIN CAMBIOS EN LA LÓGICA) -->
+        <div class="form-container sign-up">
+            <form method="POST" action="/Eccomerce/guardar">
+                <h1>Crear cuenta</h1>
+                <div class="social-icons">
+                    <a class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a class="icon"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <span>o usa tu correo electrónico para registrarte</span>
+                <input type="text" name="primerNombre" placeholder="Primer Nombre" required>
+                <input type="text" name="segundoNombre" placeholder="Segundo Nombre (Opcional)">
+                <input type="text" name="primerApellido" placeholder="Primer Apellido" required>
+                <input type="text" name="segundoApellido" placeholder="Segundo Apellido (Opcional)">
+                <input type="tel" name="telefono" placeholder="Número de teléfono" pattern="^9\d{8}$" title="El número de teléfono debe empezar con 9 y contener 9 dígitos." required>
+                <input type="email" name="correo" placeholder="Correo electrónico" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Por favor ingresa un correo electrónico válido." required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <input type="text" name="direccion" placeholder="Dirección (Opcional)">
+                <button type="submit">Registrarse</button>
+            </form>
+        </div>
+        <!-- FORMULARIO DE INICIO DE SESIÓN (SIN CAMBIOS EN LA LÓGICA) -->
+        <div class="form-container sign-in">
+            <form method="POST" action="/Eccomerce/validar">
+                <h1>Iniciar sesión</h1>
+                <div class="social-icons">
+                    <a class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
+                    <a class="icon"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a class="icon"><i class="fa-brands fa-github"></i></a>
+                </div>
+                <span>o usa tu correo y contraseña</span>
+                <div th:if="${error}" class="error-message" style="color: red; margin-bottom: 10px;">
+                    <p th:text="${error}"></p>
+                </div>
+                <input type="email" name="correo" placeholder="Correo electrónico" required>
+                <input type="password" name="contrasena" placeholder="Contraseña" required>
+                <button type="submit">Iniciar sesión</button>
+            </form>
+        </div>
+        <!-- PANEL DESLIZANTE (SIN CAMBIOS) -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>¡Bienvenido de Nuevo!</h1>
+                    <p>Ingresa tus datos personales para usar todas las funciones del sitio</p>
+                    <button class="hidden" id="login">Iniciar sesión</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>¡Hola, amigo!</h1>
+                    <p>Regístrate con tus datos personales para usar todas las funciones del sitio</p>
+                    <button class="hidden" id="register">Registrarse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- ====================================================== -->
+<!-- FOOTER IDÉNTICO AL DE COMPUTADORAS.HTML -->
+<!-- ====================================================== -->
+<footer class="footer-mejorado">
+    <div class="footer-container">
+        <div class="footer-columna">
+            <h4>Atención al Cliente</h4>
+            <ul>
+                <li><a href="#">Centro de Ayuda</a></li>
+                <li><a href="#">Preguntas Frecuentes</a></li>
+                <li><a href="#">Estado de tu Pedido</a></li>
+                <li><a href="#">Contáctanos</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Sobre InnovaTec</h4>
+            <ul>
+                <li><a href="#">¿Quiénes Somos?</a></li>
+                <li><a href="#">Trabaja con Nosotros</a></li>
+                <li><a href="#">Blog de Tecnología</a></li>
+                <li><a href="#">Nuestras Tiendas</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Políticas</h4>
+            <ul>
+                <li><a href="#">Política de Privacidad</a></li>
+                <li><a href="#">Términos y Condiciones</a></li>
+                <li><a href="#">Política de Devoluciones</a></li>
+                <li><a href="#">Política de Cookies</a></li>
+            </ul>
+        </div>
+        <div class="footer-columna">
+            <h4>Síguenos</h4>
+            <div class="redes-sociales">
+                <a href="https://www.facebook.com/" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.youtube.com/" class="social-icon" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.tiktok.com/" class="social-icon" target="_blank"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <div class="logo-footer">
+                <img src="/img/INNOVALOGO.png" alt="logo-innovatec"/>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2025 InnovaTec. Todos los derechos reservados.</p>
+    </div>
+</footer>
+
+<!-- SCRIPT DE LA ANIMACIÓN (SIN CAMBIOS) -->
+<script>
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
+
+    if (registerBtn) {
+        registerBtn.addEventListener('click', () => {
+            container.classList.add('active');
+        });
+    }
+
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove('active');
+        });
+    }
+</script>
+
+</body>
+</html>
