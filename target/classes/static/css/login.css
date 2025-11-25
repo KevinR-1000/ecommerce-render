@@ -47,7 +47,7 @@
 
 /* ---- Estilos de Botones y Formularios ---- */
 .container button {
-    background-color: #003366;
+    background-color: #222222;
     color: #fff;
     font-size: 12px;
     padding: 10px 45px;
@@ -140,7 +140,7 @@
 }
 
 .toggle {
-    background: linear-gradient(to right, #0e1857, #003366);
+    background: linear-gradient(to right, #0e1857, #222222);
     color: #fff;
     position: relative;
     left: -100%;

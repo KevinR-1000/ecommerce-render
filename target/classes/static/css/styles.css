@@ -24,12 +24,12 @@ main {
 
 /* ---- Variables de Color ---- */
 :root {
-    --color-principal: #003366;
+    --color-principal: #222222;
 }
 
 /* ---- Estilos del Encabezado (Header) ---- */
 .header {
-    background-color: #003366 ;
+    background-color: #222222 ;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -172,7 +172,7 @@ main {
 
 /* ---- Estilos del Pie de Página (Footer) ---- */
 .footer-mejorado {
-    background-color: #003366;
+    background-color: #222222;
     color: #b0c4de;
     padding: 60px 0 20px 0;
     font-family: 'Nunito', sans-serif;
@@ -253,7 +253,7 @@ main {
 
 .redes-sociales .social-icon:hover {
     background-color: #ffbc0e;
-    color: #003366;
+    color: #222222;
     transform: translateY(-3px);
 }
 
