@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             if (response.ok) {
-                alert('¡Compra realizada con éxito! Gracias por confiar en InnovaTec.');
+                alert('¡Compra realizada con éxito! Gracias por confiar en Voltix.');
                 shoppingCart = []; // Vacío el carrito.
                 renderCartItems(); // Actualizo la vista.
                 closePaymentModal(); // Cierro el modal.
