@@ -134,7 +134,7 @@ main {
 /* ---- Sección del Banner Principal ---- */
 .contenedor-banner {
     background-image: linear-gradient(100deg, #735d5d, #00000020),
-    url('../img/INNOVATE.jpg');
+    url('../img/voltixfondo.jpg');
     height: 20rem;
     width: 100vw;
     background-size: cover;
